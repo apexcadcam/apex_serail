@@ -142,6 +142,29 @@ bench --site your-site.com uninstall-app apex_serial
 
 ## ❓ حل المشاكل الشائعة
 
+### ⚠️ ERR_CONNECTION_RESET في بيئة التطوير
+**هذا ليس خطأ في البرنامج!**
+
+`ERR_CONNECTION_RESET` يحدث عندما:
+- الخادم يتوقف (web server process ينتهي)
+- Redis services تتوقف
+- هذا **سلوك طبيعي** في بيئة التطوير
+
+**الحل:**
+```bash
+# بدء Redis services
+redis-server config/redis_cache.conf > /dev/null 2>&1 &
+redis-server config/redis_queue.conf > /dev/null 2>&1 &
+
+# بدء الخادم
+bench --site your-site.com serve --port 8000
+```
+
+**على السيرفر الإنتاج:**
+- استخدم supervisor أو systemd لإدارة الخدمات
+- استخدم `bench start` لبدء جميع الخدمات
+- الخادم لن يتوقف تلقائياً في بيئة الإنتاج
+
 ### Problem 1: ModuleNotFoundError: No module named 'apex_serial'
 **الحل:**
 ```bash

@@ -34,6 +34,17 @@ bench --site [your-site-name] clear-cache
 - **Demo Device Workflow**: Track devices assigned to sales representatives
 - **Warehouse Management**: Automatic creation of used and demo warehouses
 
+### ⚠️ Development vs Production
+
+**في بيئة التطوير:**
+- الخادم قد يتوقف عند إغلاق terminal (`ERR_CONNECTION_RESET`)
+- هذا **سلوك طبيعي** وليس خطأ في البرنامج
+- استخدم `bench start` أو supervisor لإدارة الخدمات
+
+**في بيئة الإنتاج:**
+- استخدم supervisor/systemd لإدارة الخدمات
+- الخادم يعمل بشكل مستمر ولن يتوقف تلقائياً
+
 ### License
 
 mit
